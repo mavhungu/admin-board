@@ -1,8 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react';
 import {Link } from "react-router-dom";
+import axios from 'axios';
+const rootUrl = 'http://localhost:3010/';
 
-export default class Nav extends Component {
-  render() {
+const Nav =()=>{
+  const [products,setProducts]= useState({});
+
+  useEffect(() => {
+      (
+          async () => {
+              const response = await axios.get(`${rootUrl}users`,{withCredentials: true,});
+              setProducts(response.data);
+              //console.log(response.data);
+          }
+      )();
+  }, []);
     return (
       <>
         <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -17,8 +29,8 @@ export default class Nav extends Component {
                 </div>
             </div>
         </header>
-        
       </>
     )
-  }
 }
+
+export default Nav;
